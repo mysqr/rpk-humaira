@@ -1,0 +1,952 @@
+/* assets/css/style.css - Sistem POS Modern & Persediaan Beras RPK Humaira */
+
+/* ==============================================================
+   1. CSS VARIABLES & DESIGN TOKENS
+   ============================================================== */
+:root {
+  /* Color Palette */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-subtle: #eff6ff;
+  --primary-border: #bfdbfe;
+
+  --bulog-blue: #0b4f9c;
+  --bulog-gold: #f59e0b;
+
+  --emerald: #10b981;
+  --emerald-hover: #059669;
+  --emerald-subtle: #ecfdf5;
+  --emerald-border: #a7f3d0;
+
+  --purple: #8b5cf6;
+  --purple-hover: #7c3aed;
+  --purple-subtle: #f5f3ff;
+  --purple-border: #ddd6fe;
+
+  --amber: #f59e0b;
+  --amber-hover: #d97706;
+  --amber-subtle: #fffbeb;
+  --amber-border: #fde68a;
+
+  --rose: #ef4444;
+  --rose-hover: #dc2626;
+  --rose-subtle: #fef2f2;
+  --rose-border: #fecaca;
+
+  /* Neutral Slates */
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+
+  /* App Dimensions & Theme */
+  --sidebar-width: 260px;
+  --bg-app: #f8fafc;
+  --card-bg: #ffffff;
+
+  /* Modern Layered Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.04), 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 4px 14px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 30px -6px rgba(15, 23, 42, 0.1), 0 8px 12px -4px rgba(15, 23, 42, 0.05);
+  --shadow-glow: 0 4px 18px 0 rgba(37, 99, 235, 0.35);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==============================================================
+   2. GLOBAL BASE STYLES & TYPOGRAPHY
+   ============================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--slate-800);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--slate-900);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate-300);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-400);
+}
+
+/* Text Hierarchy */
+.text-muted {
+  color: var(--slate-500) !important;
+}
+
+.text-dark {
+  color: var(--slate-900) !important;
+}
+
+/* ==============================================================
+   3. APP WRAPPER & SIDEBAR
+   ============================================================== */
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: linear-gradient(180deg, #090e17 0%, #0d1527 100%);
+  color: var(--slate-100);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+  z-index: 1040;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sidebar-brand {
+  padding: 1.25rem 1.4rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(9, 14, 23, 0.95);
+}
+
+.sidebar-brand .logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+}
+
+.sidebar-menu {
+  padding: 1.1rem 0.85rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.menu-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  padding: 1rem 0.85rem 0.35rem;
+  font-weight: 800;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.sidebar-link.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  transform: translateX(3px);
+}
+
+.sidebar-link i {
+  font-size: 1.15rem;
+  width: 22px;
+  text-align: center;
+  transition: transform var(--transition-fast);
+}
+
+.sidebar-link:hover i {
+  transform: scale(1.1);
+}
+
+.sidebar-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(9, 14, 23, 0.8);
+}
+
+/* ==============================================================
+   4. TOP NAVBAR (GLASSMORPHISM)
+   ============================================================== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+.top-navbar {
+  height: 68px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.85rem;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.top-navbar .dropdown-toggle {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: 99px;
+  padding: 0.3rem 0.85rem 0.3rem 0.4rem;
+  transition: all var(--transition-fast);
+}
+
+.top-navbar .dropdown-toggle:hover {
+  background: var(--slate-50);
+  border-color: var(--slate-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.content-body {
+  padding: 1.75rem 2rem;
+  flex: 1;
+}
+
+/* ==============================================================
+   5. MODERN CARDS & STAT CARDS
+   ============================================================== */
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--slate-100);
+  padding: 1.15rem 1.4rem;
+  border-top-left-radius: 14px !important;
+  border-top-right-radius: 14px !important;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  padding: 1.35rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--slate-300);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.55rem;
+  flex-shrink: 0;
+}
+
+.stat-icon.sphp {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.stat-icon.medium {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.stat-icon.premium {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+}
+
+.stat-icon.warning {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.stat-icon.danger {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+/* ==============================================================
+   6. TABLES & DATA PRESENTATION
+   ============================================================== */
+.table-custom {
+  vertical-align: middle;
+}
+
+.table-custom thead th {
+  background: #f8fafc;
+  color: var(--slate-600);
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1rem;
+  border-bottom: 2px solid var(--slate-200);
+}
+
+.table-custom tbody td {
+  padding: 0.95rem 1rem;
+  font-size: 0.885rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--slate-800);
+}
+
+.table-hover tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* ==============================================================
+   7. BADGES & CHIPS (MODERN PILLS)
+   ============================================================== */
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 99px;
+  padding: 0.35em 0.8em;
+  font-size: 0.75rem;
+}
+
+.badge-sphp {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
+}
+
+.badge-medium {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+}
+
+.badge-premium {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+}
+
+.badge-eceran {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+}
+
+/* Subtler Pill Badges */
+.badge-soft-primary {
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+}
+
+.badge-soft-success {
+  background: var(--emerald-subtle);
+  color: var(--emerald-hover);
+  border: 1px solid var(--emerald-border);
+}
+
+.badge-soft-danger {
+  background: var(--rose-subtle);
+  color: var(--rose-hover);
+  border: 1px solid var(--rose-border);
+}
+
+.badge-soft-warning {
+  background: var(--amber-subtle);
+  color: var(--amber-hover);
+  border: 1px solid var(--amber-border);
+}
+
+/* ==============================================================
+   8. BUTTONS & CONTROLS
+   ============================================================== */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.885rem;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 1.15rem;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+  color: #ffffff;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+  color: #ffffff;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.btn-outline-primary {
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-outline-danger {
+  border: 1.5px solid var(--rose);
+  color: var(--rose);
+}
+
+.btn-outline-danger:hover {
+  background: var(--rose);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+/* Form Inputs */
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 1.5px solid var(--slate-200);
+  font-size: 0.9rem;
+  padding: 0.55rem 0.9rem;
+  color: var(--slate-800);
+  background-color: #ffffff;
+  transition: all var(--transition-fast);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+
+.input-group-text {
+  border-radius: 10px;
+  border: 1.5px solid var(--slate-200);
+  background-color: var(--slate-50);
+  color: var(--slate-600);
+}
+
+/* ==============================================================
+   9. POS (KASIR PENJUALAN) MODERN STYLES
+   ============================================================== */
+.pos-products-col {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.pos-cart-col {
+  height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-product-card {
+  cursor: pointer;
+  background: #ffffff;
+  border: 1.5px solid var(--slate-200);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.pos-product-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.pos-product-card.sphp-card {
+  border-top: 4px solid var(--primary);
+}
+
+.pos-product-card.medium-card {
+  border-top: 4px solid var(--emerald);
+}
+
+.pos-product-card.premium-card {
+  border-top: 4px solid var(--purple);
+}
+
+.cart-items-container {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--slate-50);
+  border-radius: 10px;
+  border: 1px solid var(--slate-200);
+  padding: 0.75rem;
+}
+
+.cart-item {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition-fast);
+}
+
+.cart-item:hover {
+  border-color: var(--slate-300);
+}
+
+/* ==============================================================
+   10. MODALS & POPUPS
+   ============================================================== */
+.modal-content {
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid var(--slate-100);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--slate-100);
+}
+
+.modal-backdrop.show {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0.5;
+}
+
+/* ==============================================================
+   11. ALERTS & CALLOUTS
+   ============================================================== */
+.alert {
+  border-radius: 12px;
+  border: 1px solid transparent;
+  padding: 0.95rem 1.25rem;
+}
+
+.alert-success {
+  background: var(--emerald-subtle);
+  border-color: var(--emerald-border);
+  color: #065f46;
+}
+
+.alert-danger {
+  background: var(--rose-subtle);
+  border-color: var(--rose-border);
+  color: #991b1b;
+}
+
+.alert-warning {
+  background: var(--amber-subtle);
+  border-color: var(--amber-border);
+  color: #92400e;
+}
+
+.alert-info {
+  background: var(--primary-subtle);
+  border-color: var(--primary-border);
+  color: #1e40af;
+}
+
+/* ==============================================================
+   12. MOBILE RESPONSIVE
+   ============================================================== */
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 1050;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.6);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(3px);
+    z-index: 1045;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .sidebar-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .top-navbar {
+    padding: 0 1rem;
+    height: 60px;
+  }
+
+  .content-body {
+    padding: 1rem 0.85rem;
+  }
+
+  .pos-products-col,
+  .pos-cart-col {
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+}
+
+/* ==============================================================
+   13. COMPREHENSIVE PRINT STYLESHEET (STRUK & LAPORAN)
+   ============================================================== */
+@media print {
+
+  .no-print,
+  .d-print-none,
+  .sidebar,
+  .top-navbar,
+  .sidebar-backdrop,
+  .btn,
+  button,
+  .dropdown,
+  nav,
+  .alert,
+  form,
+  .pagination,
+  #sidebarToggle,
+  #sidebarBackdrop,
+  #sidebarCloseBtn {
+    display: none !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 0.8cm 0.7cm 0.8cm 0.7cm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    font-size: 8.5pt !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .app-wrapper,
+  .main-content,
+  .content-body {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .card-body {
+    padding: 0 !important;
+  }
+
+  .stat-card {
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+    padding: 0.4rem 0.6rem !important;
+    background: #f8fafc !important;
+    border-radius: 4px !important;
+  }
+
+  .table-responsive {
+    overflow: visible !important;
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 6px !important;
+    font-size: 8pt !important;
+    color: #000000 !important;
+  }
+
+  .table th,
+  .table td {
+    border: 1px solid #000000 !important;
+    padding: 3.5px 5px !important;
+    color: #000000 !important;
+    vertical-align: middle !important;
+  }
+
+  .table th {
+    background-color: #f1f5f9 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 8pt !important;
+    text-align: center !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .table tfoot tr {
+    border-top: 2px solid #000000 !important;
+    font-weight: bold !important;
+  }
+
+  .badge {
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
+    padding: 1px 4px !important;
+    font-size: 7.5pt !important;
+  }
+
+  .print-header {
+    display: block !important;
+    text-align: center !important;
+    margin-bottom: 0.75rem !important;
+    border-bottom: 2.5px double #000000 !important;
+    padding-bottom: 0.4rem !important;
+  }
+
+  .print-header h4 {
+    font-size: 13.5pt !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
+  }
+
+  .print-header .print-sub {
+    font-size: 8.5pt !important;
+    color: #000000 !important;
+    margin: 2px 0 !important;
+    text-align: center !important;
+  }
+
+  .print-header .print-doc-title {
+    font-size: 10.5pt !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    margin-top: 4px !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 0.5px !important;
+    text-decoration: underline !important;
+    text-align: center !important;
+  }
+
+  .print-header .print-period {
+    font-size: 8pt !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  .print-signature {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    margin-top: 1.5rem !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-signature .sign-box {
+    text-align: center !important;
+    min-width: 180px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .print-signature .sign-space {
+    height: 45px !important;
+  }
+
+  .print-signature .sign-name {
+    font-weight: bold !important;
+    text-decoration: underline !important;
+  }
+}
+
+.thermal-receipt {
+  max-width: 380px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  padding: 1.25rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.thermal-receipt hr {
+  border-top: 1px dashed #475569;
+  opacity: 0.7;
+}
+
+.quota-progress {
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
